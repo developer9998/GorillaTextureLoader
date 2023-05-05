@@ -15,4 +15,9 @@ Gorilla Texture Loader is a plugin for the VR game Gorilla Tag, by <a href="http
 ## Installation
 To install this plugin drag and drop the contents of the .ZIP archive into your ``Gorilla Tag\BepInEx\plugins`` directory. Then ensure all dependencies are satisfied. If you wish to add more custom textures join the discord server linke above. Press the verify button and go to the ``🏡|Community>texture-packs`` channel. Then download any file you want. Note the file MUST have the .texture extension. Once you have the files downloaded drag and drop all of them into your ``addons`` folder which can be found in the ``BepInEx\plugins\textureloader`` folder.
 ## Usage
-To use this plugin simply go to the [ComputerInterface](https://github.com/ToniMacaroni/ComputerInterface) and select the TextureLoader option. Then select LoadTexture. Finally select the texture you want to load. Are there no textures? Scroll down to the [troubling shooting](#trouble shooting) for help.
+To use this plugin simply go to the [ComputerInterface](https://github.com/ToniMacaroni/ComputerInterface) and select the TextureLoader option. Then select LoadTexture. Finally select the texture you want to load. Are there no textures? Scroll down to the [troubling shooting](#Trouble-Shooting) for help.
+## Trouble Shooting
+* No textures found?
+* Blank screen where the textures should be?
+* No TextureLoader option in the main view?
+If any of these are the case please scroll up to the [install directions](Installation) and reinstall the mod.
