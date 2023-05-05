@@ -1,4 +1,5 @@
 ﻿using ComputerInterface;
+using System.Collections.Generic;
 using System.Text;
 
 namespace TextureLoader.Core
@@ -13,15 +14,41 @@ namespace TextureLoader.Core
             stringBuilder.Repeat("=", WIDTH).AppendLines(Offset);
             return stringBuilder;
         }
+        internal static string[] ValueToArray(this Dictionary<string, string> dictionary)
+        {
+            string[] array = new string[dictionary.Count];
+            int i = 0;
+            foreach (KeyValuePair<string, string> pair in dictionary)
+            {
+                array[i] = pair.Value;
+                i++;
+            }
+            return array;
+        }
         internal static StringBuilder ToStringBuilder(this string ThisString)
         {
             return new StringBuilder().Append(ThisString);
         }
 
+        internal static string ToColor(this string ThisString, string color = "green")
+        {
+            string HEX = Colors[color];
+            return $"<color=#{HEX}>{ThisString}</color>";
+        }
+
+        private static Dictionary<string, string> Colors = new Dictionary<string, string>()
+        {
+            { "green", "09ff00" },
+            { "red", "ff0800" },
+            { "gray", "ffffff50" }
+        };
+
         internal static object Log(this object obj, LogType logType = LogType.Info)
         {
 #if DEBUG
             string Message = "**[TEXTURE LOADER]** : " + obj;
+            //string path = Path.GetDirectoryName(typeof(Main).Assembly.Location) + "/TextureLoader.log";
+
             switch (logType)
             {
                 case LogType.Info:

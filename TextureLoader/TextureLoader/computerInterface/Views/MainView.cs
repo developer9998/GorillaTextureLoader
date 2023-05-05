@@ -3,36 +3,24 @@
 */
 using ComputerInterface;
 using ComputerInterface.ViewLib;
-using System.Linq;
 using System.Text;
 using TextureLoader.Core;
-using TextureLoader.Models;
-using UnityEngine;
 
 namespace TextureLoader.computerInterface.Views
 {
     internal class MainView : ComputerView
     {
-        // constants
         private UISelectionHandler selectionHandler;
-        private UIElementPageHandler<TextItem> pageHandler;
-
-        private TextItem[] ExternalTextItemListing;
-
+        private int SelectedIndex;
         public override void OnShow(object[] args)
         {
             base.OnShow(args);
             selectionHandler = new UISelectionHandler(EKeyboardKey.Up, EKeyboardKey.Down, EKeyboardKey.Enter);
-            selectionHandler.ConfigureSelectionIndicator("<color=#ed6540>></color> ", "", "  ", "");
+            selectionHandler.ConfigureSelectionIndicator("<color=#ed6540>></color>", "", " ", "");
             selectionHandler.OnSelected += SelectionHandler_OnSelected;
+            selectionHandler.MaxIdx = 2;
+            selectionHandler.CurrentSelectionIndex = SelectedIndex;
 
-            pageHandler = new UIElementPageHandler<TextItem>(EKeyboardKey.Left, EKeyboardKey.Right);
-
-            var texturePack = Core.TextureLoader.GetAllTexture();
-            ExternalTextItemListing = texturePack.Select(x => new TextItem(x.package.Name, x)).ToArray();
-
-            pageHandler.EntriesPerPage = Mathf.Clamp(texturePack.Length, 0, 5);
-            selectionHandler.MaxIdx = pageHandler.EntriesPerPage;
             DrawPage();
         }
 
@@ -41,47 +29,45 @@ namespace TextureLoader.computerInterface.Views
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder
                 .BeginCenter()
-                    .AddHeader(SCREEN_WIDTH, "Texture Loader", "By Crafterbot")
-                    .EndAlign();
+                .AddHeader(SCREEN_WIDTH, "Texture Loader", "By Crafterbot")
+                .EndAlign()
 
-            int StartingIndex = pageHandler.GetAbsoluteIndex(0);
-            for (int i = StartingIndex; i < StartingIndex + pageHandler.EntriesPerPage; i++)
-            {
-                int AbsoluteIndex = pageHandler.GetAbsoluteIndex(i);
-                string text = ExternalTextItemListing[AbsoluteIndex].Text;
-                stringBuilder.AppendLine(selectionHandler.GetIndicatedText(AbsoluteIndex, text));
-            }
-            selectionHandler.CurrentSelectionIndex = StartingIndex;
+                .AppendLine(selectionHandler.GetIndicatedText(0, "Load Texture"))
+                .AppendLine(selectionHandler.GetIndicatedText(1, "Settings"))
+                .AppendLine(selectionHandler.GetIndicatedText(2, "Credits"))
+                ;
 
             SetText(stringBuilder);
         }
 
         private void SelectionHandler_OnSelected(int obj)
         {
-            ShowView<TextureInfoView>(ExternalTextItemListing[obj].TexturePack);
+            switch (obj)
+            {
+                case 0:
+                    ShowView<TexturesView>();
+                    break;
+                case 1:
+                    ShowView<SettingsView>();
+                    break;
+                case 2:
+                    ShowView<Credits>();
+                    break;
+            }
         }
 
         public override void OnKeyPressed(EKeyboardKey key)
         {
             base.OnKeyPressed(key);
-            if (pageHandler.HandleKeyPress(key) || selectionHandler.HandleKeypress(key))
+            if (selectionHandler.HandleKeypress(key))
             {
+                SelectedIndex = selectionHandler.CurrentSelectionIndex;
                 DrawPage();
                 return;
             }
 
             if (key == EKeyboardKey.Back)
                 ReturnToMainMenu();
-        }
-    }
-    internal class TextItem
-    {
-        public string Text;
-        public TexturePack TexturePack;
-        public TextItem(string text, TexturePack TexturePack)
-        {
-            Text = text;
-            this.TexturePack = TexturePack;
         }
     }
 }

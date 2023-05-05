@@ -69,6 +69,9 @@
     <Reference Include="PlayFab">
       <HintPath>$(GameAssemblyPath)\PlayFab.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Oculus\Software\Software\another-axiom-gorilla-tag\Gorilla Tag_Data\Managed\System.Configuration.dll</HintPath>
+    </Reference>
     <Reference Include="System.EnterpriseServices">
       <HintPath>$(GameAssemblyPath)\System.EnterpriseServices.dll</HintPath>
     </Reference>

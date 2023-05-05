@@ -9,12 +9,13 @@ namespace TextureLoader.computerInterface.Views
         public override void OnShow(object[] args)
         {
             base.OnShow(args);
-            SetText($"<color=red>{args[0]}</color>".ToStringBuilder());
+            string value = args[0] as string;
+            SetText(value.ToColor("red").ToStringBuilder());
         }
 
         public override void OnKeyPressed(EKeyboardKey key)
         {
-            ReturnToMainMenu();
+            ReturnView();
         }
     }
 }

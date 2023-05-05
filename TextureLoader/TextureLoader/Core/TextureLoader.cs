@@ -14,46 +14,74 @@ namespace TextureLoader.Core
 {
     internal class TextureLoader
     {
+        public static TexturePack CurrentTexturePack;
+
+        private static MeshRenderer _PrimaryAtlas;
+        private static MeshRenderer PrimaryAtlas
+        {
+            get
+            {
+                if (_PrimaryAtlas == null)
+                    _PrimaryAtlas = GameObject.Find("Level/forest/ForestObjects/Uncover ForestCombined/CombinedMesh-Uncover ForestCombined-mesh").GetComponentInChildren<MeshRenderer>();
+                return _PrimaryAtlas;
+            }
+        }
+
         private static Texture MainAtlasDefault;
         private static Texture TreeStumpDefault;
-        private static Texture treeroomatlasDefault; // now I am pissed
+        private static Texture treeroomatlasDefault;
+        private static Texture GroundTextureDefault;
         internal static void SetTexture(TexturePack texturePack)
         {
-            Material AtlasMaterial = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "forestatlas");
             Material TreeStumpMaterial = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "Tree Texture Baker-mat");
             Material TreeRoomMaterial = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "treeroomatlas");
             if (MainAtlasDefault == null)
-                MainAtlasDefault = AtlasMaterial.mainTexture;
+                MainAtlasDefault = PrimaryAtlas.materials[0].mainTexture;
             if (TreeStumpDefault == null)
                 TreeStumpDefault = TreeStumpMaterial.mainTexture;
             if (treeroomatlasDefault == null)
                 treeroomatlasDefault = TreeRoomMaterial.mainTexture;
-            AtlasMaterial.mainTexture = texturePack.atlas;
+            if (GroundTextureDefault == null)
+                GroundTextureDefault = PrimaryAtlas.materials[2].mainTexture;
+
+            PrimaryAtlas.materials[2].mainTexture = texturePack.ground;
+            PrimaryAtlas.materials[0].mainTexture = texturePack.atlas;
             TreeStumpMaterial.mainTexture = texturePack.TreeTexture;
             TreeRoomMaterial.mainTexture = texturePack.treeroomatlas;
-            // Set ground texture
-            GameObject.Find("Level/forest/ForestObjects/Uncover ForestCombined/CombinedMesh-Uncover ForestCombined-mesh").GetComponentInChildren<MeshRenderer>().materials[2].mainTexture = texturePack.ground;
         }
         internal static void ResetTexture()
         {
-            Material AtlasMaterial = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "forestatlas");
-            Material TreeStumpMaterial = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "Tree Texture Baker-mat-_MainTex-atlas-0");
+            PrimaryAtlas.materials[2].mainTexture = GroundTextureDefault;
+            Material TreeStumpMaterial = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "Tree Texture Baker-mat");
             Material TreeRoomMaterial = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "treeroomatlas");
-            AtlasMaterial.mainTexture = MainAtlasDefault;
+            PrimaryAtlas.materials[0].mainTexture = MainAtlasDefault;
             TreeStumpMaterial.mainTexture = TreeStumpDefault;
             TreeRoomMaterial.mainTexture = treeroomatlasDefault;
-            // Set ground texture
-            GameObject.Find("Level/forest/ForestObjects/Uncover ForestCombined/CombinedMesh-Uncover ForestCombined-mesh").GetComponentInChildren<MeshRenderer>().materials[2].mainTexture = MainAtlasDefault;
+
+            CurrentTexturePack = null;
         }
 
-        internal static TexturePack[] GetAllTexture()
+        internal static Dictionary<string, string> GetAllTextureNames()
+        {
+            string[] Paths = Directory.GetFiles(Path.GetDirectoryName(typeof(Main).Assembly.Location) + "/addons", "*.texture");
+            Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
+            foreach (string path in Paths)
+            {
+                keyValuePairs.Add(Path.GetFileNameWithoutExtension(path), Path.GetFullPath(path));
+                Path.GetFullPath(path).Log();
+            }
+            return keyValuePairs;
+        }
+
+        // Removed due to major performance loss
+        /*internal static TexturePack[] GetAllTexture()
         {
             string[] Paths = Directory.GetFiles(Path.GetDirectoryName(typeof(Main).Assembly.Location) + "/addons", "*.texture");
             List<TexturePack> texturePack = new List<TexturePack>();
             foreach (string path in Paths)
                 texturePack.Add(LoadTextureByPath(Path.GetFullPath(path)));
             return texturePack.ToArray();
-        }
+        }*/
         internal static TexturePack LoadTextureByPath(string path)
         {
             if (!File.Exists(path))
@@ -90,12 +118,19 @@ namespace TextureLoader.Core
             return Encoding.UTF8.GetString(bytes);
         }
 
+        /*private static (Material TreeStumpMaterial, Material TreeRoomMaterial, Material Ground) GetMaterials()
+        {
+            Material TreeStumpMaterial = UnityEngine.Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "Tree Texture Baker-mat");
+            Material TreeRoomMaterial = UnityEngine.Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "treeroomatlas");
+            return (TreeStumpMaterial, TreeRoomMaterial, GameObject.Find("Level/forest/ForestObjects/Uncover ForestCombined/CombinedMesh-Uncover ForestCombined-mesh").GetComponentInChildren<MeshRenderer>().materials[2]);
+        }*/
+
         private static Texture2D GetImage(ZipArchive zipArchive, Image image)
         {
             string Name = image == 0 ? "ground.png" : "atlas.png";
             if ((int)image == 2)
                 Name = "treestump.png";
-            else if ((int) image == 3)
+            else if ((int)image == 3)
                 Name = "treestumproom.png";
 
             Stream stream = zipArchive.GetEntry(Name).Open();

@@ -1,5 +1,7 @@
 ﻿using ComputerInterface;
 using ComputerInterface.ViewLib;
+using ComputerInterface.Views;
+using System.Linq;
 using System.Text;
 using TextureLoader.Core;
 using TextureLoader.Models;
@@ -17,10 +19,10 @@ namespace TextureLoader.computerInterface.Views
 
             selectionHandler = new UISelectionHandler(EKeyboardKey.Up, EKeyboardKey.Down, EKeyboardKey.Enter);
             selectionHandler.ConfigureSelectionIndicator("<color=#ed6540>></color> ", "", "  ", "");
-            selectionHandler.MaxIdx = 0;
+            selectionHandler.MaxIdx = 1;
             selectionHandler.OnSelected += SelectionHandler_OnSelected;
 
-            texturePack = (TexturePack)args[0];
+            texturePack = Core.TextureLoader.LoadTextureByPath(Core.TextureLoader.GetAllTextureNames().ElementAt((int)args[0]).Value);
             DrawPage();
         }
 
@@ -30,6 +32,7 @@ namespace TextureLoader.computerInterface.Views
             stringBuilder
                 .AddHeader(SCREEN_WIDTH, texturePack.package.Name, texturePack.package.Description, 3)
                 .AppendLine(selectionHandler.GetIndicatedText(0, "Load Texture"))
+                .AppendLine(selectionHandler.GetIndicatedText(1, "Unload"))
                 ;
             SetText(stringBuilder);
         }
@@ -40,6 +43,9 @@ namespace TextureLoader.computerInterface.Views
             {
                 case 0:
                     Core.TextureLoader.SetTexture(texturePack);
+                    break;
+                case 1:
+                    Core.TextureLoader.ResetTexture();
                     break;
             }
         }
@@ -54,7 +60,7 @@ namespace TextureLoader.computerInterface.Views
             }
 
             if (key == EKeyboardKey.Back)
-                ReturnToMainMenu();
+                ShowView<TexturesView>();
         }
     }
 }
