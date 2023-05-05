@@ -24,10 +24,11 @@ namespace TextureLoader.computerInterface.Views
             selectionHandler = new UISelectionHandler(EKeyboardKey.Up, EKeyboardKey.Down, EKeyboardKey.Enter);
             selectionHandler.ConfigureSelectionIndicator("<color=#ed6540>></color>", "", " ", "");
             selectionHandler.OnSelected += SelectionHandler_OnSelected;
-            selectionHandler.MaxIdx = 5;
+            selectionHandler.MaxIdx = pageHandler.EntriesPerPage;
 
             Dictionary<string, string> AlltexturePaths = Core.TextureLoader.GetAllTextureNames();
             TextItem_Entry[] Entries = new TextItem_Entry[AlltexturePaths.Count];
+            selectionHandler.MaxIdx = AlltexturePaths.Count;
             for (int i = 0; i < AlltexturePaths.Count; i++)
             {
                 KeyValuePair<string, string> pair = AlltexturePaths.ElementAt(i);
@@ -44,15 +45,15 @@ namespace TextureLoader.computerInterface.Views
             stringBuilder.AddHeader(SCREEN_WIDTH, "Textures", $"[{Core.TextureLoader.GetAllTextureNames().Count}] Entries");
             pageHandler.EnumarateElements((obj, index) =>
             {
-                int Index = pageHandler.GetAbsoluteIndex(index);
-                stringBuilder.AppendLine(selectionHandler.GetIndicatedText(Index, obj.Name));
+                stringBuilder.AppendLine(selectionHandler.GetIndicatedText(index, obj.Name));
             });
+            stringBuilder.AppendFooter(pageHandler);
             SetText(stringBuilder);
         }
 
         private void SelectionHandler_OnSelected(int obj)
         {
-            ShowView<TextureInfoView>(obj);
+            ShowView<TextureInfoView>(pageHandler.GetAbsoluteIndex(obj));
         }
 
         public override void OnKeyPressed(EKeyboardKey key)

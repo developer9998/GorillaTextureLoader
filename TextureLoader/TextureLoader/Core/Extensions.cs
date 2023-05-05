@@ -1,4 +1,5 @@
 ﻿using ComputerInterface;
+using ComputerInterface.ViewLib;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,6 +14,14 @@ namespace TextureLoader.Core
             if (Author != "") stringBuilder.AppendClr(Author, "ffffff50").EndAlign().AppendLine();
             stringBuilder.Repeat("=", WIDTH).AppendLines(Offset);
             return stringBuilder;
+        }
+        internal static StringBuilder AppendFooter(this StringBuilder stringBuilder, UIPageHandler pageHandler, int Offset = 3)
+        {
+            return stringBuilder
+                .AppendLines(Offset)
+                .BeginAlign("right")
+                .AppendLine($"← {pageHandler.CurrentPage + 1}/{pageHandler.MaxPage + 1} →".ToColor("gray"))
+                .EndAlign();
         }
         internal static string[] ValueToArray(this Dictionary<string, string> dictionary)
         {

@@ -12,26 +12,34 @@ using System.IO;
 using TextureLoader.Core;
 using TextureLoader.Models;
 using UnityEngine;
+using Utilla;
 
 namespace TextureLoader
 {
     [BepInPlugin(GUID, NAME, VERSION)]
     [BepInDependency("tonimacaroni.computerinterface")] // All other dependencies are referenced in computer interface itself.
     [BepInDependency("org.legoandmars.gorillatag.utilla")]
+
+    [ModdedGamemode]
     internal class Main : BaseUnityPlugin
     {
         internal const string
             GUID = "crafterbot.textureloader",
             NAME = "TextureLoader",
-            VERSION = "0.0.1";
+            VERSION = "0.0.2";
+        internal static RoomType roomType;
+
         private void Awake()
         {
-            new SettingsController();
-            Zenjector.Install<computerInterface.MainInstaller>().OnProject();
-            Utilla.Events.RoomLeft += Events_RoomLeft;
-            Utilla.Events.GameInitialized += (object sender, System.EventArgs e) => StartCoroutine(LoadDefault());
+            if (GetIsFolderValid())
+            {
+                new SettingsController();
+                Zenjector.Install<computerInterface.MainInstaller>().OnProject();
+                Utilla.Events.RoomLeft += Events_RoomLeft;
+                Utilla.Events.RoomJoined += Events_RoomJoined;
+                Utilla.Events.GameInitialized += (object sender, System.EventArgs e) => StartCoroutine(LoadDefault());
+            }
         }
-
         private IEnumerator LoadDefault()
         {
             yield return new WaitForSeconds(2f); // buffer time. The game is already loaded but to decrease initial lag.
@@ -46,14 +54,33 @@ namespace TextureLoader
                 }
             }
         }
-
+        private bool GetIsFolderValid()
+        {
+            return Directory.Exists(Path.GetDirectoryName(typeof(Main).Assembly.Location) + "/addons");
+        }
+        #region Room event handlers
+        [ModdedGamemodeJoin]
+        private void OnModdedJoin() =>
+            roomType = RoomType.Modded;
+        private void Events_RoomJoined(object sender, Utilla.Events.RoomJoinedArgs e) =>
+            roomType = RoomType.Standard;
         private void Events_RoomLeft(object sender, Utilla.Events.RoomJoinedArgs e)
         {
+            roomType = RoomType.None;
             if (Core.TextureLoader.CurrentTexturePack != null)
             {
                 if (!Core.TextureLoader.CurrentTexturePack.package.IsVerified)
                     Core.TextureLoader.ResetTexture();
             }
         }
+
+        #endregion
+    }
+
+    internal enum RoomType
+    {
+        None,
+        Modded,
+        Standard
     }
 }

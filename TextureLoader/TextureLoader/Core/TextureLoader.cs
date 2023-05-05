@@ -33,6 +33,10 @@ namespace TextureLoader.Core
         private static Texture GroundTextureDefault;
         internal static void SetTexture(TexturePack texturePack)
         {
+            if (Main.roomType != RoomType.Standard && !texturePack.package.IsVerified)
+                return;
+
+            Material Forestatlas = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "forestatlas");
             Material TreeStumpMaterial = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "Tree Texture Baker-mat");
             Material TreeRoomMaterial = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "treeroomatlas");
             if (MainAtlasDefault == null)
@@ -46,15 +50,18 @@ namespace TextureLoader.Core
 
             PrimaryAtlas.materials[2].mainTexture = texturePack.ground;
             PrimaryAtlas.materials[0].mainTexture = texturePack.atlas;
+            Forestatlas.mainTexture = texturePack.atlas;
             TreeStumpMaterial.mainTexture = texturePack.TreeTexture;
             TreeRoomMaterial.mainTexture = texturePack.treeroomatlas;
         }
         internal static void ResetTexture()
         {
             PrimaryAtlas.materials[2].mainTexture = GroundTextureDefault;
+            Material Forestatlas = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "forestatlas");
             Material TreeStumpMaterial = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "Tree Texture Baker-mat");
             Material TreeRoomMaterial = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "treeroomatlas");
             PrimaryAtlas.materials[0].mainTexture = MainAtlasDefault;
+            Forestatlas.mainTexture = MainAtlasDefault;
             TreeStumpMaterial.mainTexture = TreeStumpDefault;
             TreeRoomMaterial.mainTexture = treeroomatlasDefault;
 
@@ -82,7 +89,7 @@ namespace TextureLoader.Core
                 texturePack.Add(LoadTextureByPath(Path.GetFullPath(path)));
             return texturePack.ToArray();
         }*/
-        internal static TexturePack LoadTextureByPath(string path)
+        internal static TexturePack LoadTextureByPath(string path, bool OnlyPackage = false)
         {
             if (!File.Exists(path))
             {
@@ -104,13 +111,22 @@ namespace TextureLoader.Core
             ("Successfully loaded the texture packs info! Texture name:[" + Package.Name + "]").Log();
             "Moving on too loading the textures!".Log();
 
-            Texture2D Ground = GetImage(zipArchive, Image.Ground);
-            Texture2D PrimaryAtlas = GetImage(zipArchive, Image.Atlas);
-            Texture2D TreeStump = GetImage(zipArchive, Image.TreeStump);
-            Texture2D treeroomatlas = GetImage(zipArchive, Image.TreeRoomAtlas);
-            TexturePack texturePack = new TexturePack(Package, Ground, PrimaryAtlas, TreeStump, treeroomatlas);
-            zipArchive.Dispose();
-            return texturePack;
+            if (!OnlyPackage)
+            {
+                Texture2D Ground = GetImage(zipArchive, Image.Ground);
+                Texture2D PrimaryAtlas = GetImage(zipArchive, Image.Atlas);
+                Texture2D TreeStump = GetImage(zipArchive, Image.TreeStump);
+                Texture2D treeroomatlas = GetImage(zipArchive, Image.TreeRoomAtlas);
+                TexturePack texturePack = new TexturePack(Package, Ground, PrimaryAtlas, TreeStump, treeroomatlas);
+                zipArchive.Dispose();
+                return texturePack;
+            }
+            else
+            {
+                TexturePack texturePack = new TexturePack(Package, null, null, null, null);
+                zipArchive.Dispose();
+                return texturePack;
+            }
         }
 
         private static string BytesToString(byte[] bytes)

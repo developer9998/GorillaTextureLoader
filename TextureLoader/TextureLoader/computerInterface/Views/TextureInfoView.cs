@@ -33,6 +33,8 @@ namespace TextureLoader.computerInterface.Views
                 .AddHeader(SCREEN_WIDTH, texturePack.package.Name, texturePack.package.Description, 3)
                 .AppendLine(selectionHandler.GetIndicatedText(0, "Load Texture"))
                 .AppendLine(selectionHandler.GetIndicatedText(1, "Unload"))
+                .AppendLines(1)
+                .AppendLine(texturePack.package.IsVerified ? "Compatible in all lobbies.".ToColor() : "This texturepack will ONLY work in modded lobbies.".ToColor("red"))
                 ;
             SetText(stringBuilder);
         }
