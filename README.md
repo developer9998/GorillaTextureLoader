@@ -1,5 +1,5 @@
-Temporary preview video:
-[!](https://s11.gifyu.com/images/ezgif-1-a5bbfde494.gif)
+Temporary preview video (Scroll down to see more info):
+![](https://github.com/CrafterBotOfficial/TextureLoader/blob/main/Github/TEMPpreview.gif?raw=true)
 
 <h1 align="center"><br>Gorilla Tag Texture Loader</h1>
 <h3>This only works in the Forest map, read below for a explination.</h3>
