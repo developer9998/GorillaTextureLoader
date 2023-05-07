@@ -1,3 +1,6 @@
+Temporary preview video:
+[!](https://s11.gifyu.com/images/ezgif-1-a5bbfde494.gif)
+
 <h1 align="center"><br>Gorilla Tag Texture Loader</h1>
 <h3>This only works in the Forest map, read below for a explination.</h3>
 
