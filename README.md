@@ -10,7 +10,7 @@ Gorilla Texture Loader is a plugin for the VR game Gorilla Tag, by <a href="http
 <a href="https://discord.gg/rxSEV6PqJu">
   <img src="https://img.shields.io/discord/1058184246335897671?color=%235865F2&label=Crafterbot%27s%20Discord&logo=discord" alt="Discord">
 </a>
-<img src="https://img.shields.io/badge/Status-Unsupported-red">
+<img src="https://img.shields.io/badge/Status-Supported-green">
 </div>
 
 ## Installation
