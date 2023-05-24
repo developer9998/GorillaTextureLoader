@@ -45,12 +45,12 @@ namespace TextureLoader
                 .EndAlign();
             return stringBuilder;
         }
-        /// <returns>Bool from playerprefs, idk what it does if the key doesn't exist so...</returns>
+        /*/// <returns>Bool from playerprefs, idk what it does if the key doesn't exist so...</returns>
         internal static bool GetBool(string Key, bool? NewValue = null)
         {
             if (NewValue.HasValue) PlayerPrefs.SetInt(Key, NewValue.Value ? 1 : 0);
             return PlayerPrefs.GetInt(Key) == 1;
-        }
+        }*/
         internal static void Log(this object obj, LogLevel logLevel = LogLevel.Info)
         {
 #if DEBUG

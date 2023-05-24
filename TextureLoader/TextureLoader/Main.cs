@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using BepInEx.Configuration;
 using BepInEx.Logging;
 using Bepinject;
 using HarmonyLib;
@@ -13,16 +14,25 @@ namespace TextureLoader
         internal const string
             GUID = "crafterbot.dumbmonkegame.textureloader",
             NAME = "TextureLoader",
-            VERSION = "0.0.3",
-            PLAYERPREFS_ONLOADKEY = "textureloaderloadtextureongameloadtexturepath",
-            PLAYERPREFS_ONLOAD_TOGGLED = "textureloaderloadtextureonload";
+            VERSION = "0.0.3";
         internal static bool RoomModded;
         internal static ManualLogSource manualLogSource;
+
+        #region Config
+        internal static ConfigEntry<bool> LoadOnStartup;
+        internal static ConfigEntry<string> LoadOnStartupKey;
+        #endregion
+
         internal Main()
         {
             manualLogSource = Logger;
             $"Init : {GUID}".Log();
             Utilities.AssemblyDirectoryPath.Log();
+
+            #region
+            LoadOnStartup = Config.Bind("General", "LoadOnStartup", false, "Load the texture pack on startup");
+            LoadOnStartupKey = Config.Bind("General", "LoadOnStartupKey", "", "The texture pack to load on startup");
+            #endregion
 
             Zenjector.Install<computerInteface.MainInstaller>().OnProject();
             new Harmony(GUID).PatchAll();
@@ -37,6 +47,7 @@ namespace TextureLoader
         private void OnLeft()
         {
             RoomModded = false;
+
         }
     }
 }
