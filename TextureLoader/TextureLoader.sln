@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureLoader", "TextureLoader\TextureLoader.csproj", "{BF9F9B29-E116-4D1A-99FB-76177AB09DC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureLoader", "TextureLoader\TextureLoader.csproj", "{807EF40F-DB78-4497-99F2-4A03B2A993FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BF9F9B29-E116-4D1A-99FB-76177AB09DC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BF9F9B29-E116-4D1A-99FB-76177AB09DC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BF9F9B29-E116-4D1A-99FB-76177AB09DC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BF9F9B29-E116-4D1A-99FB-76177AB09DC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{807EF40F-DB78-4497-99F2-4A03B2A993FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{807EF40F-DB78-4497-99F2-4A03B2A993FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{807EF40F-DB78-4497-99F2-4A03B2A993FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{807EF40F-DB78-4497-99F2-4A03B2A993FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9AAFDDC0-94DA-4906-B9CE-626713E1AA6A}
+		SolutionGuid = {894384A9-45D7-4329-843C-D046B0419F4C}
 	EndGlobalSection
 EndGlobal

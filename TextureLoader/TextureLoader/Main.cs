@@ -1,86 +1,43 @@
-﻿/*
-    If any other developers want to add more maps, have fun. 
-    DM me and I will give you the texture maker. However the 
-    canyon has like 50 different textures so I don't recommend.
-    I personally am way to lazy to do that. And to be honest
-    I would run out of motivation and stop working on the project.
-*/
-using BepInEx;
+﻿using BepInEx;
+using BepInEx.Logging;
 using Bepinject;
-using System.Collections;
-using System.IO;
-using TextureLoader.Core;
-using TextureLoader.Models;
-using UnityEngine;
+using HarmonyLib;
 using Utilla;
 
 namespace TextureLoader
 {
-    [BepInPlugin(GUID, NAME, VERSION)]
-    [BepInDependency("tonimacaroni.computerinterface")] // All other dependencies are referenced in computer interface itself.
-    [BepInDependency("org.legoandmars.gorillatag.utilla")]
-
+    [BepInPlugin(GUID, NAME, VERSION), BepInDependency("org.legoandmars.gorillatag.utilla"), BepInDependency("tonimacaroni.computerinterface"), BepInDependency("dev.auros.bepinex.bepinject")]
     [ModdedGamemode]
     internal class Main : BaseUnityPlugin
     {
         internal const string
-            GUID = "crafterbot.textureloader",
+            GUID = "crafterbot.dumbmonkegame.textureloader",
             NAME = "TextureLoader",
-            VERSION = "0.0.2";
-        internal static RoomType roomType;
+            VERSION = "0.0.3",
+            PLAYERPREFS_ONLOADKEY = "textureloaderloadtextureongameloadtexturepath",
+            PLAYERPREFS_ONLOAD_TOGGLED = "textureloaderloadtextureonload";
+        internal static bool RoomModded;
+        internal static ManualLogSource manualLogSource;
+        internal Main()
+        {
+            manualLogSource = Logger;
+            $"Init : {GUID}".Log();
+            Utilities.AssemblyDirectoryPath.Log();
 
-        private void Awake()
-        {
-            if (GetIsFolderValid())
-            {
-                new SettingsController();
-                Zenjector.Install<computerInterface.MainInstaller>().OnProject();
-                Utilla.Events.RoomLeft += Events_RoomLeft;
-                Utilla.Events.RoomJoined += Events_RoomJoined;
-                Utilla.Events.GameInitialized += (object sender, System.EventArgs e) => StartCoroutine(LoadDefault());
-            }
+            Zenjector.Install<computerInteface.MainInstaller>().OnProject();
+            new Harmony(GUID).PatchAll();
         }
-        private IEnumerator LoadDefault()
-        {
-            yield return new WaitForSeconds(2f); // buffer time. The game is already loaded but to decrease initial lag.
-            if (SettingsController.LoadOnStartup)
-            {
-                if (!File.Exists(SettingsController.SelectedKey))
-                    throw new System.Exception("FUCK");
-                TexturePack texturePack = Core.TextureLoader.LoadTextureByPath(SettingsController.SelectedKey);
-                if (texturePack.package.IsVerified)
-                {
-                    Core.TextureLoader.SetTexture(texturePack);
-                }
-            }
-        }
-        private bool GetIsFolderValid()
-        {
-            return Directory.Exists(Path.GetDirectoryName(typeof(Main).Assembly.Location) + "/addons");
-        }
-        #region Room event handlers
+
         [ModdedGamemodeJoin]
-        private void OnModdedJoin() =>
-            roomType = RoomType.Modded;
-        private void Events_RoomJoined(object sender, Utilla.Events.RoomJoinedArgs e) =>
-            roomType = RoomType.Standard;
-        private void Events_RoomLeft(object sender, Utilla.Events.RoomJoinedArgs e)
+        private void OnJoin()
         {
-            roomType = RoomType.None;
-            if (Core.TextureLoader.CurrentTexturePack != null)
-            {
-                if (!Core.TextureLoader.CurrentTexturePack.package.IsVerified)
-                    Core.TextureLoader.ResetTexture();
-            }
+            RoomModded = true;
         }
-
-        #endregion
-    }
-
-    internal enum RoomType
-    {
-        None,
-        Modded,
-        Standard
+        [ModdedGamemodeLeave]
+        private void OnLeft()
+        {
+            RoomModded = false;
+        }
     }
 }
+

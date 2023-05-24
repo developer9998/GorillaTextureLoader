@@ -1,13 +1,16 @@
-﻿using System;
+﻿/*
+    I got the idea to convert everything to a ZIP file from MonkeMapLoader. 
+*/
+using System;
 
 namespace TextureLoader.Models
 {
     [Serializable]
     public class Package
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public bool IsVerified { get; set; } // TODO: Implement this, any verified texture packs will be able to work in EVERY LOBBY. 
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public bool IsVerified { get; private set; }
 
         public Package(string Name, string Description, bool isVerified)
         {
