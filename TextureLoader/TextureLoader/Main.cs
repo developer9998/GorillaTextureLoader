@@ -45,7 +45,8 @@ namespace TextureLoader
         {
             RoomModded = false;
             if (TextureController.GetTextureLoaded())
-                TextureController.ResetTextures();
+                if (!TextureController.LoadedPackage.IsVerified)
+                    TextureController.ResetTextures();
         }
     }
 }
