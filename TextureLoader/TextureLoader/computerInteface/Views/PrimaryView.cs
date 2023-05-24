@@ -33,7 +33,7 @@ namespace TextureLoader.computerInteface.Views
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder
-                .AppendHeader(Main.NAME, "By CummerBot")
+                .AppendHeader(Main.NAME, "By Crafterbot")
                 .AppendLine(selectionHandler.GetIndicatedText(0, "Load Texture"))
                 .AppendLine(selectionHandler.GetIndicatedText(1, "Settings"))
                 .AppendLine(selectionHandler.GetIndicatedText(2, "Credits"))
