@@ -10,6 +10,13 @@ namespace TextureLoader
 {
     internal static class TextureController
     {
+        internal static Package LoadedPackage;
+        internal static bool GetTextureLoaded()
+        {
+            if (GetAllMaterials() == null)
+                return false;
+            return LoadedPackage != null;
+        }
         internal static Package GetPackage(string URL)
         {
             string path = Path.GetFullPath(URL);
@@ -26,8 +33,10 @@ namespace TextureLoader
                 }
             }
         }
-        internal static void LoadTexture(string URL)
+        internal static void LoadTexture(string URL, Package package)
         {
+            LoadedPackage = package;
+
             string path = Path.GetFullPath(URL);
             Stream FileStream = File.OpenRead(path); // never nesting;)
             ZipArchive zipArchive = new ZipArchive(FileStream);
@@ -71,7 +80,7 @@ namespace TextureLoader
         {
             var AllMaterials = GetAllMaterials();
             AllMaterials.ForestAtlas.mainTexture = gameMaterials.ForestAtlas.mainTexture;
-            AllMaterials.ForestAtlasObj.mainTexture = gameMaterials.ForestAtlasObj.mainTexture; 
+            AllMaterials.ForestAtlasObj.mainTexture = gameMaterials.ForestAtlasObj.mainTexture;
             AllMaterials.Ground.mainTexture = gameMaterials.Ground.mainTexture;
             AllMaterials.Leaf.mainTexture = gameMaterials.Leaf.mainTexture;
             AllMaterials.TreeStumpAtlas.mainTexture = gameMaterials.TreeStumpAtlas.mainTexture;
@@ -96,6 +105,7 @@ namespace TextureLoader
         internal static void ResetTextures()
         {
             SetTextures(DefaultMaterials);
+            LoadedPackage = null;
         }
 
         /* Material fetching:((( */

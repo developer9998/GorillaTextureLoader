@@ -27,9 +27,8 @@ namespace TextureLoader
         {
             manualLogSource = Logger;
             $"Init : {GUID}".Log();
-            Utilities.AssemblyDirectoryPath.Log();
 
-            #region
+            #region Config
             LoadOnStartup = Config.Bind("General", "LoadOnStartup", false, "Load the texture pack on startup");
             LoadOnStartupKey = Config.Bind("General", "LoadOnStartupKey", "", "The texture pack to load on startup");
             #endregion
@@ -47,7 +46,8 @@ namespace TextureLoader
         private void OnLeft()
         {
             RoomModded = false;
-
+            if (TextureController.GetTextureLoaded())
+                TextureController.ResetTextures();
         }
     }
 }

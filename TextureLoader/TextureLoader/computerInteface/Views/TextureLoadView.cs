@@ -57,7 +57,7 @@ namespace TextureLoader.computerInteface.Views
                 case 0:
                     if (!Main.RoomModded && !package.IsVerified)
                         return;
-                    TextureController.LoadTexture(TexturePath);
+                    TextureController.LoadTexture(TexturePath, package);
                     break;
                 case 1:
                     TextureController.ResetTextures();
