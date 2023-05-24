@@ -38,10 +38,8 @@ namespace TextureLoader
         }
 
         [ModdedGamemodeJoin]
-        private void OnJoin()
-        {
+        private void OnJoin() =>
             RoomModded = true;
-        }
         [ModdedGamemodeLeave]
         private void OnLeft()
         {
