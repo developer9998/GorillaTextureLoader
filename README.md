@@ -1,19 +1,9 @@
-Temporary preview video (Scroll down to see more info):
-![](https://github.com/CrafterBotOfficial/TextureLoader/blob/main/Github/TEMPpreview.gif?raw=true)
-
-<h1 align="center"><br>Gorilla Tag Texture Loader</h1>
-<h3>This only works in the Forest map, read below for a explination.</h3>
-
-Gorilla Texture Loader is a plugin for the VR game Gorilla Tag, by <a href="https://www.gorillatagvr.com/">Another Axiom</a>. This plugin allows the user to override the default textures in the forest map. Due to the amount of materials for the canyon map, I have decided to only add support for the forest map. In the future I may expand oppen this but I am lazy.
-
 <div align="center">
-<a href="https://github.com/CrafterBotOfficial/TextureLoader/blob/main/LICENSE">
-<img src="https://img.shields.io/badge/license-MIT-%23373737"</img>
-</a>
-<a href="https://discord.gg/rxSEV6PqJu">
-  <img src="https://img.shields.io/discord/1058184246335897671?color=%235865F2&label=Crafterbot%27s%20Discord&logo=discord" alt="Discord">
-</a>
-<img src="https://img.shields.io/badge/Status-Supported-green">
+<h1>GorillaTextureLoader</h1>
+<p>TextureLoader is a plugin for the VR game Gorilla Tag that allows players to load custom texturepacks in the forest.</p>
+<a href="https://github.com/CrafterBotOfficial/TextureLoader/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-%23373737"</img></a>
+<a href="https://discord.gg/rxSEV6PqJu"><img src="https://img.shields.io/discord/1058184246335897671?color=%235865F2&label=Crafterbot%27s%20Discord&logo=discord"></a>
+<img src="https://img.shields.io/github/downloads/CrafterBotOfficial/GorillaTextureLoader/total?label=Downloads">
 </div>
 
 ## Installation
