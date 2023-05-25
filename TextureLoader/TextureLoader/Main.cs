@@ -14,7 +14,7 @@ namespace TextureLoader
         internal const string
             GUID = "crafterbot.dumbmonkegame.textureloader",
             NAME = "TextureLoader",
-            VERSION = "0.0.3";
+            VERSION = "1.0.0";
         internal static bool RoomModded;
         internal static ManualLogSource manualLogSource;
 
