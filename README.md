@@ -15,6 +15,8 @@ To use this plugin simply go to the [ComputerInterface](https://github.com/ToniM
 * Blank screen where the textures should be?
 * No TextureLoader option in the main view?
 If any of these are the case please scroll up to the [install directions](Installation) and reinstall the mod.
+## Creating Texturepacks
+To create a texturepack go to the [texture compiler](https://github.com/CrafterBotOfficial/GorillaTextureLoader-Compile).
 ## Legal & Credits
 * This plugin was inspired by [fchb1239](https://github.com/fchb1239/)s unreleased [GorillaTexturepacks](https://github.com/fchb1239/GorillaTexturepacks).
 * Required notice:"This product is not affiliated with Gorilla Tag or Another Axiom LLC and is not endorsed or otherwise sponsored by Another Axiom LLC. Portions of the materials contained herein are property of Another Axiom LLC. © 2021 Another Axiom LLC."
