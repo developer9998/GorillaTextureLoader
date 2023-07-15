@@ -80,7 +80,7 @@ namespace TextureLoader
             var AllMaterials = GetAllMaterials();
             //AllMaterials.ForestAtlas.mainTexture = NewTextures[0];
             AllMaterials.ForestAtlasObj.mainTexture = NewTextures[0];
-            //AllMaterials.Ground.mainTexture = NewTextures[1];
+            AllMaterials.Ground.mainTexture = NewTextures[1];
             //AllMaterials.Leaf.mainTexture = NewTextures[2];
             AllMaterials.TreeStumpAtlas.mainTexture = NewTextures[3];
             AllMaterials.TreeStrumpROOMAtlas.mainTexture = NewTextures[4];
@@ -90,7 +90,7 @@ namespace TextureLoader
             var AllMaterials = GetAllMaterials();
             //AllMaterials.ForestAtlas.mainTexture = gameMaterials.ForestAtlas.mainTexture;
             AllMaterials.ForestAtlasObj.mainTexture = gameMaterials.ForestAtlasObj.mainTexture;
-            //AllMaterials.Ground.mainTexture = gameMaterials.Ground.mainTexture;
+            AllMaterials.Ground.mainTexture = gameMaterials.Ground.mainTexture;
             //AllMaterials.Leaf.mainTexture = gameMaterials.Leaf.mainTexture;
             AllMaterials.TreeStumpAtlas.mainTexture = gameMaterials.TreeStumpAtlas.mainTexture;
             AllMaterials.TreeStrumpROOMAtlas.mainTexture = gameMaterials.TreeStrumpROOMAtlas.mainTexture;
@@ -128,7 +128,7 @@ namespace TextureLoader
                 GameObject MainForestMesh = GameObject.FindObjectsOfType<GameObject>().First(x => x.name == "Uncover ForestCombined-mesh-mesh"); // This fixes the forest atlas not being changed
 
                 Material ForestAtlasObj = MainForestMesh.GetComponent<MeshRenderer>().materials[0];
-                ForestAtlasObj.Log();
+                Material Ground = GameObject.Find("Level/forest/ForestObjects/pitgeo/pit ground").GetComponent<MeshRenderer>().material;
                 /*Material Ground = MainForestMesh.GetComponent<MeshRenderer>().materials[2];
                 Ground.Log();
                 Material ForestAtlas = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "forestatlas");
@@ -138,8 +138,8 @@ namespace TextureLoader
                 Material TreeStump = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "Tree Texture Baker-mat");
                 Material TreeRoom = Resources.FindObjectsOfTypeAll<Material>().First(x => x.name == "treeroomatlas");
                 TreeRoom.Log();
-                _AllMaterials = new GameMaterials(ForestAtlasObj, /*ForestAtlas, Ground*/ /*Leaf,*/ TreeStump, TreeRoom);
-                DefaultMaterials = new GameMaterials(UnityEngine.Object.Instantiate(ForestAtlasObj), /*UnityEngine.Object.Instantiate(ForestAtlas), UnityEngine.Object.Instantiate(Ground),*/ /*UnityEngine.Object.Instantiate(Leaf),*/ UnityEngine.Object.Instantiate(TreeStump), UnityEngine.Object.Instantiate(TreeRoom));
+                _AllMaterials = new GameMaterials(ForestAtlasObj, /*ForestAtlas,*/ Ground, /*Leaf,*/ TreeStump, TreeRoom);
+                DefaultMaterials = new GameMaterials(UnityEngine.Object.Instantiate(ForestAtlasObj), /*UnityEngine.Object.Instantiate(ForestAtlas),*/ UnityEngine.Object.Instantiate(Ground), /*UnityEngine.Object.Instantiate(Leaf),*/ UnityEngine.Object.Instantiate(TreeStump), UnityEngine.Object.Instantiate(TreeRoom));
                 "Finished retrieving all materials!".Log(BepInEx.Logging.LogLevel.Message);
             }
             return _AllMaterials;
