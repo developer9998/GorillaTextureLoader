@@ -19,6 +19,9 @@ namespace TextureLoader
                 files[i] = Path.GetFileNameWithoutExtension(files[i]);
             return files.ToArray();
         }
+        /// <summary>
+        /// Wraps the text in <color></color>
+        /// </summary>
         internal static string ToColor(this string ThisString, string color = "green")
         {
             string HEX = Colors[color];
@@ -53,7 +56,7 @@ namespace TextureLoader
         internal static void Log(this object obj, LogLevel logLevel = LogLevel.Info)
         {
 #if DEBUG
-            Main.manualLogSource.Log(logLevel, obj);
+            UnityEngine.Debug.Log("[TextureLoader] " + obj); // got kinda lazy :P // Main.Instance.logger.Log(logLevel, obj);
 #endif
         }
     }

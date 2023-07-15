@@ -1,42 +1,32 @@
-﻿using BepInEx;
-using BepInEx.Configuration;
-using BepInEx.Logging;
+﻿/*
+    Most of the code here is pretty old, and I am not going to clean it up too much.
+*/
+using BepInEx;
 using Bepinject;
-using HarmonyLib;
-using Utilla;
+using GorillaTextureLoader;
 using System.IO;
+using TextureLoader.Models;
 using UnityEngine;
+using Utilla;
 
 namespace TextureLoader
 {
-    [BepInPlugin(GUID, NAME, VERSION), BepInDependency("org.legoandmars.gorillatag.utilla"), BepInDependency("tonimacaroni.computerinterface"), BepInDependency("dev.auros.bepinex.bepinject")]
+    [BepInPlugin("crafterbot.dumbmonkegame.textureloader", "TextureLoader", "1.0.2"), BepInDependency("org.legoandmars.gorillatag.utilla"), BepInDependency("tonimacaroni.computerinterface"), BepInDependency("dev.auros.bepinex.bepinject")]
     [ModdedGamemode]
     internal class Main : BaseUnityPlugin
     {
-        internal const string
-            GUID = "crafterbot.dumbmonkegame.textureloader",
-            NAME = "TextureLoader",
-            VERSION = "1.0.1";
-        internal static bool RoomModded;
-        internal static ManualLogSource manualLogSource;
+        internal static Main Instance;
 
-        #region Config
-        internal static ConfigEntry<bool> LoadOnStartup;
-        internal static ConfigEntry<string> LoadOnStartupKey;
-        #endregion
+        internal bool RoomModded;
 
         internal Main()
         {
-            manualLogSource = Logger;
-            $"Init : {GUID}".Log();
+            Instance = this;
+            Configuration.Init(Config);
 
-            #region Config
-            LoadOnStartup = Config.Bind("General", "LoadOnStartup", false, "Load the texture pack on startup");
-            LoadOnStartupKey = Config.Bind("General", "LoadOnStartupKey", "", "The texture pack to load on startup");
-            #endregion
-
+            Utilla.Events.GameInitialized += OnGameInitialized;
             Zenjector.Install<computerInteface.MainInstaller>().OnProject();
-            new Harmony(GUID).PatchAll();
+            // new Harmony(Info.Metadata.GUID).PatchAll(typeof(Patches));
         }
 
         [ModdedGamemodeJoin]
@@ -51,14 +41,27 @@ namespace TextureLoader
                     TextureController.ResetTextures();
         }
 
+        private void OnGameInitialized(object sender, object args)
+        {
+            if (File.Exists(Configuration.LoadOnStartupKey.Value) && Configuration.LoadOnStartup.Value)
+            {
+                Package package = TextureController.GetPackage(Configuration.LoadOnStartupKey.Value);
+                if (package.IsVerified)
+                {
+                    $"Loading texturepack:{package.Name}".Log();
+                    TextureController.LoadTexture(Configuration.LoadOnStartupKey.Value, package);
+                    "Loaded texturepack".Log(BepInEx.Logging.LogLevel.Message);
+                }
+                else
+                    $"Uh oh, you can only load verified textures on startup:/".Log(BepInEx.Logging.LogLevel.Fatal);
+            }
+        }
+
 #if DEBUG
 
         private int SelectedTexture;
         private void OnGUI()
         {
-            GUILayout.Label(NAME);
-            GUILayout.Label(VERSION);
-
             if (GUILayout.Button("Reset textures"))
                 TextureController.ResetTextures();
 
