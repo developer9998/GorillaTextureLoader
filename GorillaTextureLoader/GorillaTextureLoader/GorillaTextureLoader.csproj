@@ -102,6 +102,7 @@
     <Compile Include="computerInteface\Views\SettingsView.cs" />
     <Compile Include="computerInteface\Views\TextureLoadView.cs" />
     <Compile Include="computerInteface\Views\TextureSelectView.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Models\GameMaterials.cs" />
     <Compile Include="Models\Package.cs" />

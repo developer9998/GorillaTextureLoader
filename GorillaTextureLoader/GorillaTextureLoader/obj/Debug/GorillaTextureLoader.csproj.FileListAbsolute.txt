@@ -103,3 +103,8 @@ C:\Users\jackc\OneDrive\Documents\GitHub\GorillaTextureLoader\GorillaTextureLoad
 C:\Users\jackc\OneDrive\Documents\GitHub\GorillaTextureLoader\GorillaTextureLoader\GorillaTextureLoader\obj\Debug\GorillaTextureLoader.pdb
 C:\Program Files\Oculus\Software\Software\another-axiom-gorilla-tag\BepInEx\plugins\TextureLoader\GorillaTextureLoader.dll
 C:\Program Files\Oculus\Software\Software\another-axiom-gorilla-tag\BepInEx\plugins\TextureLoader\GorillaTextureLoader.pdb
+C:\Users\jackc\Documents\GitHub\GorillaTextureLoader\GorillaTextureLoader\GorillaTextureLoader\obj\Debug\GorillaTextureLoader.csproj.AssemblyReference.cache
+C:\Users\jackc\Documents\GitHub\GorillaTextureLoader\GorillaTextureLoader\GorillaTextureLoader\obj\Debug\GorillaTextureLoader.csproj.CoreCompileInputs.cache
+C:\Users\jackc\Documents\GitHub\GorillaTextureLoader\GorillaTextureLoader\GorillaTextureLoader\obj\Debug\GorillaTextureLoader.dll
+C:\Users\jackc\Documents\GitHub\GorillaTextureLoader\GorillaTextureLoader\GorillaTextureLoader\obj\Debug\GorillaTextureLoader.pdb
+C:\Users\jackc\Documents\GitHub\GorillaTextureLoader\GorillaTextureLoader\GorillaTextureLoader\obj\Debug\GorillaTextureLoader.csproj.CopyComplete

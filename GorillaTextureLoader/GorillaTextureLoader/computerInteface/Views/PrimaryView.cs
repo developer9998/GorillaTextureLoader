@@ -11,7 +11,7 @@ namespace TextureLoader.computerInteface.Views
         internal static int _CurrentSelectedIndex;
         internal class Entry : IComputerModEntry
         {
-            public string EntryName => Main.NAME;
+            public string EntryName => "GorillaTextureLoader";
             public Type EntryViewType => typeof(PrimaryView);
         }
 
@@ -33,7 +33,7 @@ namespace TextureLoader.computerInteface.Views
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder
-                .AppendHeader(Main.NAME, "By Crafterbot")
+                .AppendHeader("TextureLoader", "By Crafterbot")
                 .AppendLine(selectionHandler.GetIndicatedText(0, "Load Texture"))
                 .AppendLine(selectionHandler.GetIndicatedText(1, "Settings"))
                 .AppendLine(selectionHandler.GetIndicatedText(2, "Credits"))

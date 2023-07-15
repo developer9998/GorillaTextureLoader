@@ -49,7 +49,9 @@ namespace TextureLoader
                 if (zipArchive.Entries[i].Name != "package.json")
                 {
                     ("Adding Texture:" + zipArchive.Entries[i].Name + " to the list").Log();
-                    MaterialEntries.Add(ConvertToTexture(zipArchive.Entries[i]));
+                    Texture2D texture2D = ConvertToTexture(zipArchive.Entries[i]);
+                    texture2D.filterMode = FilterMode.Point;
+                    MaterialEntries.Add(texture2D);
                 }
                 else;
             // If the texturepack does not contain the leaf texture(which is a option) | handler

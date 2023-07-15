@@ -55,7 +55,7 @@ namespace TextureLoader.computerInteface.Views
             switch (obj)
             {
                 case 0:
-                    if (!Main.RoomModded && !package.IsVerified)
+                    if (!Main.Instance.RoomModded && !package.IsVerified)
                         return;
                     TextureController.LoadTexture(TexturePath, package);
                     break;
